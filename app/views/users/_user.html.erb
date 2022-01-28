@@ -1,0 +1,30 @@
+<%= turbo_frame_tag dom_id(user, :card) do %>
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title"><%= user.username %></h5>
+			<p class="user-email">
+				<%= user.email %>
+			</p>
+			<p class="user-details">
+				<% if user.deactivated_at %>
+					<em>Deactivated At <%= user.deactivated_at.iso8601 %></em>
+				<% else %>
+					<% if user.admin %>
+						<span class="badge bg-primary">Admin</span>
+					<% end %>
+					<% unless user.active %>
+						<span class="badge bg-secondary">Inactive</span>
+					<% end %>
+					<% unless user.validated %>
+						<span class="badge bg-warning">Not Validated</span>
+					<% end %>
+				<% end %>
+			</p>
+			<div class="user-links">
+				<a href="<%= user_path(user) %>" target="_top" class="card-link">View User</a>
+				<a href="<%= edit_user_path(user) %>" class="card-link">Edit</a>
+			</div>
+		</div>
+	</div>
+<% end %>
+

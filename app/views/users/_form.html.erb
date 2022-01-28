@@ -1,0 +1,43 @@
+<% form_url = user.new_record? ? users_url : user_url(user) %>
+<div class="card">
+	<div class="card-body">
+		<%= form_with model: user, url: form_url, format: :turbo_stream do |form| %>
+			<h5 class="card-title">
+				<%= form.label :username %>
+				<%= form.text_field :username%>
+			</h5>
+			<p class="user-email">
+				<%= form.label :email %>
+				<%= form.text_field :email %>
+			</p>
+
+			<p class="user-details">
+				<%= form.check_box :admin, class: "btn-check", checked: user.admin, autocomplete: "off" %>
+				<%= form.label :admin, class: "btn btn-outline-primary" %>
+
+				<%= form.check_box :active, class: "btn-check", checked: user.active, autocomplete: "off" %>
+				<%= form.label :active, class: "btn btn-outline-primary" %>
+
+				<%= form.check_box :validated, class: "btn-check", checked: user.validated, autocomplete: "off" %>
+				<%= form.label :validated, class: "btn btn-outline-primary" %>
+			</p>
+
+			<% if user.errors.any? %>
+				<div style="color: red">
+					<h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+					<ul>
+						<% user.errors.each do |error| %>
+							<li><%= error.full_message %></li>
+						<% end %>
+					</ul>
+				</div>
+			<% end %>
+
+			<div class="user-links">
+				<%= form.submit %>
+				<a class="card-link" href="<%= user_path(user) %>">Back</a>
+			</div>
+		<% end %>
+	</div>
+</div>
